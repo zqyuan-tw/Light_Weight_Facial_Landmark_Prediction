@@ -1,1 +1,1 @@
-# Light-Weight-Facial-Landmark-Prediction-Challenge
+# Light Weight Facial Landmark Prediction

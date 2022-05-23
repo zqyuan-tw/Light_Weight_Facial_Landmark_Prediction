@@ -1,9 +1,9 @@
 # Light-Weight-Facial-Landmark-Prediction-Challenge
 ## Datasets
 ### Training Data
-`99756` images with ground truth
+`99756` images with ground truth from **Microsoft FaceSynthetics**
 ### Validation Data
-`199` images with ground truth
+`199` images with ground truth from projected **AFLW2000-3D**
 ## Methods
 ### [FaceAlignment Library](https://github.com/1adrianb/face-alignment "游標顯示")
 #### [Training Code in .lua](https://github.com/1adrianb/face-alignment-training )

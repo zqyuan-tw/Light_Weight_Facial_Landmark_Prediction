@@ -9,7 +9,7 @@ class FaceDataset(Dataset):
         super().__init__()
         self.prefix = prefix
         self.transform = transform
-        with open(os.path.join(dir, 'annot.pkl'), 'rb') as f:
+        with open(os.path.join(self.prefix, 'annot.pkl'), 'rb') as f:
             self.imgs, self.landmarks = pickle.load(f)
         self.landmarks = np.array(self.landmarks)
 
@@ -19,5 +19,5 @@ class FaceDataset(Dataset):
     def __getitem__(self, index):
         img = self.transform(Image.open(os.path.join(self.prefix, self.imgs[index])))
         C, H, W = img.shape
-        norm_landmarks = np.array([self.landmarks[index, 0] / W, self.landmarks[index, 1] / H])
+        norm_landmarks = np.stack((self.landmarks[index, :, 0] / W, self.landmarks[index, :, 1] / H), axis=1)
         return img, norm_landmarks

@@ -14,7 +14,7 @@ def parse_args():
     )
     parser.add_argument(
         "--do_predict",
-        help="Path to testing configuration..",
+        help="Path to testing configuration.",
     )   
 
     args = parser.parse_args()
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     args = parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    
+
     if args.do_train is not None:
         with open(args.do_train) as f:
             config = json.load(f)
@@ -59,6 +59,17 @@ if __name__ == "__main__":
         trainer.fit(train_dataset, batch_size, optimizer, criterion, num_epoch, saved_epoch, scheduler, saved_dir, val_epoch, val_dataset)
 
     if args.do_predict is not None:
-        # TODO
-        pass
+        with open(args.do_predict) as f:
+            config = json.load(f)
         
+        model = get_model(config["model"])
+        test_dataset = FaceDataset(config["testing"]["data"], transforms.ToTensor(), False)
+        batch_size = config["testing"]["batch_size"]
+        saved_path = config["saved_path"]
+        
+        trainer = Trainer(model, device)
+        trainer.load_from_pretrained(saved_path)
+        ids, lms = trainer.predict(test_dataset, batch_size)
+        with open('solution.txt', 'w') as f:
+            for i in range(len(ids)):
+                f.write(f"{ids[i]} {' '.join(str(x) for x in lms[i])}\n")

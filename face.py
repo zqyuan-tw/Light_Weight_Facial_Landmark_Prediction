@@ -27,4 +27,4 @@ class FaceDataset(Dataset):
             norm_landmarks = np.stack((self.landmarks[index, :, 0] / W, self.landmarks[index, :, 1] / H), axis=1)
             return img, norm_landmarks
         else:
-            return img, 0
+            return self.imgs[index], img

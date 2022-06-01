@@ -53,7 +53,25 @@ class Trainer():
                 pred_landmarks = self.model(imgs)
             loss = criterion(pred_landmarks, landmarks)
             val_loss += loss.item()
-        return val_loss / len(val_loader)        
+        return val_loss / len(val_loader)     
+
+    def predict(self, dataset, batch_size):
+        test_loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=8, pin_memory=True)
+        pred_id = []
+        pred_lm = []
+        self.model.eval()
+        for ids, imgs in test_loader:
+            _, _, H, W = imgs.shape
+            pred_id += ids
+            imgs = imgs.to(self.device)
+            with torch.no_grad():
+                pred_landmarks = self.model(imgs)
+            pred_landmarks[:,:,0] *= W
+            pred_landmarks[:,:,1] *= H
+            pred_landmarks = pred_landmarks.type(torch.float32)
+            pred_lm += pred_landmarks.view(pred_landmarks.size(0), -1).cpu().numpy().tolist()
+        
+        return pred_id, pred_lm
 
     def load_from_pretrained(self, path):
         self.model.load_state_dict(torch.load(path))

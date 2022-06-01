@@ -1,0 +1,8 @@
+{
+    "model": "ConvNet",
+    "testing": {
+        "data": "./data/aflw_test/",
+        "batch_size": 64
+    },
+    "saved_path": "./convnet/best.pt"
+}

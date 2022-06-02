@@ -5,6 +5,7 @@ from face import FaceDataset
 from argparse import ArgumentParser
 from torchvision import transforms
 from models import ConvNet, ELFace
+from zipfile import ZipFile
 
 def parse_args():
     parser = ArgumentParser()
@@ -75,3 +76,5 @@ if __name__ == "__main__":
         with open('solution.txt', 'w') as f:
             for i in range(len(ids)):
                 f.write(f"{ids[i]} {' '.join(str(x) for x in lms[i])}\n")
+        with ZipFile('solution.zip', 'w') as myzip:
+            myzip.write('solution.txt')

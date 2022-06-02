@@ -1,9 +1,11 @@
 import torch
 import torch.nn as nn
 import torchvision.ops as ops
-from torchinfo import summary
 
 class ELFace(nn.Module):
+    """
+    Light-Weight Distilled HRNet for Facial Landmark Detection
+    """
     def __init__(self) -> None:
         super(ELFace, self).__init__()
         self.downsample = nn.Sequential(
@@ -102,6 +104,7 @@ class BN_Conv2d_Leaky(nn.Module):
 
 
 if __name__ == "__main__":
+    from torchinfo import summary
     m = ELFace()
     print(summary(m, input_size=(2, 3, 384, 384)))
     # (2, 3, 384, 384)

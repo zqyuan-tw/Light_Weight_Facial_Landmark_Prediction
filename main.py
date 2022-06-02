@@ -4,7 +4,7 @@ from trainer import Trainer, NME
 from face import FaceDataset
 from argparse import ArgumentParser
 from torchvision import transforms
-from models import ConvNet
+from models import ConvNet, ELFace
 
 def parse_args():
     parser = ArgumentParser()
@@ -24,6 +24,8 @@ def parse_args():
 def get_model(model):
     if model == "ConvNet":
         return ConvNet()
+    if model == "ELFace":
+        return ELFace()
     if model == "":
         return 
 
@@ -52,7 +54,7 @@ if __name__ == "__main__":
             val_epoch = 0
 
         optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-        scheduler = None
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', 0.3, 5)
         criterion = NME()
 
         trainer = Trainer(model, device)

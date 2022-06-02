@@ -38,8 +38,8 @@ class Trainer():
                     self.save_model(path=os.path.join(saved_dir, "best.pt"))
                 self.model.train()
             
-            if scheduler is not None:
-                scheduler.step()
+                if scheduler is not None:
+                    scheduler.step(val_loss)
         writer.close()
 
 

@@ -1,15 +1,15 @@
 {
-    "model": "ConvNet",
+    "model": "ELFace",
     "training": {
         "data": "./data/synthetics_train/",
-        "batch_size": 64,
-        "num_epoch": 50,
-        "learning_rate": 1e-3,
+        "batch_size": 512,
+        "num_epoch": 100,
+        "learning_rate": 1e-5,
         "checkpoint": 10
     },
-    "saved_directory": "./convnet/",
+    "saved_directory": "./elface/",
     "validation": {
         "data": "./data/aflw_val/",
-        "epoch": 5
+        "epoch": 1
     }
 }

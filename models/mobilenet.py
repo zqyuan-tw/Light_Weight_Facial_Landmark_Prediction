@@ -1,33 +1,10 @@
-from turtle import forward
 import torch
 import torch.nn as nn
 import torchvision.models as models
-from torchsummary import summary
 
-class ConvNet(nn.Module):
+class MobileNet(nn.Module):
     def __init__(self) -> None:
-        super(ConvNet, self).__init__()
-        self.features = models.resnet50(pretrained=True)
-        self.features.fc = nn.Identity()
-
-        self.regressor = nn.Sequential(
-            nn.Linear(2048, 512),
-            nn.ReLU(),
-            nn.Linear(512, 68 * 2),
-            nn.Tanh()
-        )
-            
-
-    def forward(self, x):
-        x = self.features(x)
-        x = x.view(x.size(0), -1)
-        x = self.regressor(x)
-
-        return x.view(x.size(0), 68, 2)
-
-class mobile(nn.Module):
-    def __init__(self) -> None:
-        super(mobile, self).__init__()
+        super(MobileNet, self).__init__()
         self.features = models.mobilenet_v3_small(pretrained=False)
         self.features.fc = nn.Identity()
 
@@ -236,10 +213,4 @@ class PFLD(nn.Module):
         
 
 if __name__ == "__main__":
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    input = torch.randn(2, 3, 384, 384)
-    m = PFLD().to(device)
-    # m = mobile()
-    # output = m(input)
-    # print(output.size())
-    summary(m, (3, 384, 384))
+    pass

@@ -4,7 +4,7 @@ from trainer import Trainer, NME
 from face import FaceDataset, RandomMask, RandomFlip, RandomRotate
 from argparse import ArgumentParser
 from torchvision import transforms
-from models import ConvNet, ELFace
+from models import *
 from zipfile import ZipFile
 
 def parse_args():
@@ -27,8 +27,10 @@ def get_model(model):
         return ConvNet()
     if model == "ELFace":
         return ELFace()
+    if model == "MobileNet":
+        return MobileNet()
     if model == "":
-        return 
+        return
 
 if __name__ == "__main__":
     args = parse_args()

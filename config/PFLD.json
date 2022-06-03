@@ -1,0 +1,15 @@
+{
+    "model": "PFLDInference",
+    "training": {
+        "data": "./data/synthetics_train/",
+        "batch_size": 64,
+        "num_epoch": 50,
+        "learning_rate": 1e-3,
+        "checkpoint": 10
+    },
+    "saved_directory": "./PFLD/",
+    "validation": {
+        "data": "./data/aflw_val/",
+        "epoch": 5
+    }
+}

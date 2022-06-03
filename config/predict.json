@@ -1,0 +1,8 @@
+{
+    "model": "mobilenet_v3_small",
+    "testing": {
+        "data": "./data/aflw_test/",
+        "batch_size": 64
+    },
+    "saved_path": "./mobilenet_models/non-pre/best.pt"
+}

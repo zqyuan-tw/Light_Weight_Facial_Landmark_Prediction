@@ -25,7 +25,6 @@ class ConvNet(nn.Module):
         
 
 if __name__ == "__main__":
-    input = torch.randn(2, 3, 384, 384)
+    from torchinfo import summary
     m = ConvNet()
-    output = m(input)
-    print(output.size())
+    print(summary(m, input_size=(2, 3, 384, 384)))

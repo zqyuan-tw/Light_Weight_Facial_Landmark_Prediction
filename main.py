@@ -1,7 +1,7 @@
 import json
 import torch
 from trainer import Trainer, NME
-from face import FaceDataset
+from face import FaceDataset, RandomMask, RandomFlip, RandomRotate
 from argparse import ArgumentParser
 from torchvision import transforms
 from models import ConvNet, ELFace
@@ -40,7 +40,13 @@ if __name__ == "__main__":
             config = json.load(f)
 
         model = get_model(config["model"])
-        train_dataset = FaceDataset(config["training"]["data"], transforms.ToTensor())
+        train_transform = transforms.Compose([
+            transforms.ColorJitter(0.2, 0.2, 0.2),
+            transforms.GaussianBlur(3),
+            transforms.ToTensor(), 
+            RandomMask(0.2)
+        ])
+        train_dataset = FaceDataset(config["training"]["data"], train_transform, coordinate_transform=transforms.Compose([RandomFlip(), RandomRotate(15)]))
         batch_size = config["training"]["batch_size"]
         num_epoch = config["training"]["num_epoch"]
         lr = config["training"]["learning_rate"]
@@ -66,7 +72,7 @@ if __name__ == "__main__":
             config = json.load(f)
         
         model = get_model(config["model"])
-        test_dataset = FaceDataset(config["testing"]["data"], transforms.ToTensor(), False)
+        test_dataset = FaceDataset(config["testing"]["data"], transforms.ToTensor(), do_train=False)
         batch_size = config["testing"]["batch_size"]
         saved_path = config["saved_path"]
         

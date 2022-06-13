@@ -1,0 +1,8 @@
+{
+    "model": "ConvNet",
+    "testing": {
+        "data": "../Light_Weight_Facial_Landmark_Prediction/data/aflw_test/",
+        "batch_size": 64
+    },
+    "saved_path": "./mobilenetv2_pfld/best.pt"
+}

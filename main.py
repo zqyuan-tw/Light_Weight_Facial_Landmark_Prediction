@@ -29,6 +29,8 @@ def get_model(model):
         return ELFace()
     if model == "MobileNet":
         return MobileNet()
+    if model == "Transformer":
+        return Transformer()
     if model == "":
         return
 
@@ -43,12 +45,13 @@ if __name__ == "__main__":
 
         model = get_model(config["model"])
         train_transform = transforms.Compose([
-            transforms.ColorJitter(0.2, 0.2, 0.2),
+            transforms.ColorJitter(0.5, 0.5, 0.5),
             transforms.GaussianBlur(3),
             transforms.ToTensor(), 
-            RandomMask(0.2)
+            transforms.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]),
+            RandomMask(0.1)
         ])
-        train_dataset = FaceDataset(config["training"]["data"], train_transform, coordinate_transform=transforms.Compose([RandomFlip(), RandomRotate(15)]))
+        train_dataset = FaceDataset(config["training"]["data"], train_transform, coordinate_transform=None)
         batch_size = config["training"]["batch_size"]
         num_epoch = config["training"]["num_epoch"]
         lr = config["training"]["learning_rate"]
@@ -56,7 +59,11 @@ if __name__ == "__main__":
         saved_dir = config["saved_directory"]
 
         if config["validation"] is not None:
-            val_dataset = FaceDataset(config["validation"]["data"], transforms.ToTensor())
+            val_transform = transforms.Compose([
+                transforms.ToTensor(), 
+                transforms.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]),
+            ])
+            val_dataset = FaceDataset(config["validation"]["data"], val_transform)
             val_epoch = config["validation"]["epoch"]
         else:
             val_dataset = None
@@ -74,7 +81,11 @@ if __name__ == "__main__":
             config = json.load(f)
         
         model = get_model(config["model"])
-        test_dataset = FaceDataset(config["testing"]["data"], transforms.ToTensor(), do_train=False)
+        test_transform = transforms.Compose([
+            transforms.ToTensor(), 
+            transforms.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]),
+        ])
+        test_dataset = FaceDataset(config["testing"]["data"], test_transform, do_train=False)
         batch_size = config["testing"]["batch_size"]
         saved_path = config["saved_path"]
         

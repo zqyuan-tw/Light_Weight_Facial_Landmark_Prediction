@@ -213,4 +213,6 @@ class PFLD(nn.Module):
         
 
 if __name__ == "__main__":
-    pass
+    from torchinfo import summary
+    m = MobileNet().features
+    print(summary(m, input_size=(2, 3, 384, 384)))

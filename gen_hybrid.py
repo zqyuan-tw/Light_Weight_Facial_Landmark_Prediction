@@ -16,7 +16,7 @@ table = np.array([((i / 255.0) ** 0.2) * 255
 		for i in np.arange(0, 256)]).astype("uint8")
 # Gamma Correction
 def gamma(fn):
-    img_blur = cv2.imread(os.path.join('../data/synthetics_train/', fn))
+    img_blur = cv2.imread(os.path.join('./data/synthetics_train/', fn))
     gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
     out = cv2.LUT(img_blur, table)
     cv2.imwrite(os.path.join(prefix, "gamma_"+fn), out)

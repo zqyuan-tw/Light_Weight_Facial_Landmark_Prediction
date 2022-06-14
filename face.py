@@ -26,7 +26,7 @@ class FaceDataset(Dataset):
         return len(self.imgs)
 
     def __getitem__(self, index):
-        img = self.transform(Image.open(os.path.join(self.prefix, self.imgs[index])))
+        img = self.transform(Image.open(os.path.join(self.prefix, self.imgs[index])).convert("RGB"))
         C, H, W = img.shape
         if self.landmarks is not None:
             norm_landmarks = np.stack((self.landmarks[index, :, 0] / W, self.landmarks[index, :, 1] / H), axis=1)

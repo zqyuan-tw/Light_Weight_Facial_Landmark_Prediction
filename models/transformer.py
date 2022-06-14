@@ -14,7 +14,8 @@ class Transformer(nn.Module):
         self.tanh = nn.Tanh()            
 
     def forward(self, x):
-        x = self.tanh(self.vit(x))
+        x = self.vit(x)
+        x = self.tanh(x)
 
         return x.view(x.size(0), 68, 2)
 

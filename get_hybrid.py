@@ -15,7 +15,7 @@ def parse_args():
     )
     parser.add_argument(
         "--dest_dir",
-        help="Dirrectory to destination.",
+        help="Directory to destination.",
         # default="./data/hybrid_train/"
     )   
 

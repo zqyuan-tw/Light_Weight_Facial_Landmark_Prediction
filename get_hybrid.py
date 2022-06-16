@@ -17,7 +17,7 @@ def parse_args():
         "--dest_dir",
         help="Directory to destination.",
         # default="./data/hybrid_train/"
-    )   
+    )
 
     args = parser.parse_args()
 
@@ -32,7 +32,7 @@ def sobel_transform(prefix, fn):
     gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
     img_blur = cv2.GaussianBlur(gray, (3, 3), 0)
     sobelxy = cv2.Sobel(src=img_blur, ddepth=cv2.CV_64F, dx=1, dy=1, ksize=1) # Combined X and Y Sobel Edge Detection
-    cv2.imwrite(os.path.join(prefix, "sobel_"+fn.split("/")[3]), sobelxy)
+    cv2.imwrite(os.path.join(prefix, "sobel_"+fn.split("/")[-1]), sobelxy)
 
 # Gamma Correction
 def gamma(prefix, fn):
@@ -44,7 +44,7 @@ def gamma(prefix, fn):
     img_blur = cv2.imread(fn)
     # gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
     out = cv2.LUT(img_blur, table)
-    cv2.imwrite(os.path.join(prefix, "gamma_"+fn.split("/")[3]), out)
+    cv2.imwrite(os.path.join(prefix, "gamma_"+fn.split("/")[-1]), out)
 
 
 if __name__ == '__main__':
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # look up table for gamma correction
     table = np.array([((i / 255.0) ** 0.2) * 255
 		for i in np.arange(0, 256)]).astype("uint8")
-    
+
     # Move original training data to destination directory
     prefix = args.dest_dir
     for jpgfile in glob.iglob(os.path.join(args.source_dir, "*.jpg")):
@@ -68,7 +68,7 @@ if __name__ == '__main__':
             org_path = os.path.join(args.source_dir, fn)
             sobel_transform(prefix, org_path)
             gamma(prefix, org_path)
-            # os.rename(org_path, os.path.join(args.dest_dir, fn))
+
     with open(os.path.join(args.source_dir, "annot.pkl") , 'rb') as f:
         imgs, landmarks = pickle.load(f)
     sobel_imgs = ["sobel_"+fn for fn in imgs]
@@ -87,4 +87,4 @@ if __name__ == '__main__':
     assert landmarks.shape == (299268, 68, 2)
     # print(imgs.shape)
     # print(landmarks.shape)
-    
+

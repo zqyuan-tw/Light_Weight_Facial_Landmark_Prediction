@@ -20,7 +20,7 @@ python main.py [--do_train TRAIN] [--do_predict PREDICT]
 ```
 - `--do_train` : Path to training configuration in `.json` format.
     ```json
-    # training configuration template
+    // training configuration template
     {
         "model": "MODEL_TYPE",
         "training": {
@@ -28,12 +28,12 @@ python main.py [--do_train TRAIN] [--do_predict PREDICT]
             "batch_size": 32,
             "num_epoch": 50,
             "learning_rate": 1e-4,
-            "checkpoint": 10    # save the model checkpoint every 10 epoches
+            "checkpoint": 10    // save the model checkpoint every 10 epoches
         },
         "saved_directory": "path/to/the/saved/directory/",
         "validation": {
             "data": "path/to/validation/data/directory/",
-            "epoch": 1    # validate the model every 1 epoches and save the model with best validation loss
+            "epoch": 1    // validate the model every 1 epoches and save the model with best validation loss
         }
     }
     ```
@@ -45,7 +45,7 @@ python main.py [--do_train TRAIN] [--do_predict PREDICT]
 
 - `--do_predict` : Path to inference configuration in `.json` format.
     ```json
-    # inference configuration template
+    // inference configuration template
     {
         "model": "MODEL_TYPE",
         "testing": {

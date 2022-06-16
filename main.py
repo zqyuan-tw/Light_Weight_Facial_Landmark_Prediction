@@ -25,14 +25,14 @@ def parse_args():
 def get_model(model):
     if model == "ConvNet":
         return ConvNet()
-    if model == "ELFace":
+    elif model == "ELFace":
         return ELFace()
-    if model == "MobileNet":
+    elif model == "MobileNet":
         return MobileNet()
-    if model == "Transformer":
+    elif model == "Transformer":
         return Transformer()
-    if model == "":
-        return
+    else:
+        raise ValueError(f"Invalid model type '{model}'.")
 
 if __name__ == "__main__":
     args = parse_args()
@@ -88,12 +88,13 @@ if __name__ == "__main__":
         test_dataset = FaceDataset(config["testing"]["data"], test_transform, do_train=False)
         batch_size = config["testing"]["batch_size"]
         saved_path = config["saved_path"]
+        output = config["output"]
         
         trainer = Trainer(model, device)
         trainer.load_from_pretrained(saved_path)
         ids, lms = trainer.predict(test_dataset, batch_size)
-        with open('solution.txt', 'w') as f:
+        with open(output, 'w') as f:
             for i in range(len(ids)):
                 f.write(f"{ids[i]} {' '.join(str(x) for x in lms[i])}\n")
-        with ZipFile('solution.zip', 'w') as myzip:
-            myzip.write('solution.txt')
+        # with ZipFile('solution.zip', 'w') as myzip:
+        #     myzip.write('solution.txt')

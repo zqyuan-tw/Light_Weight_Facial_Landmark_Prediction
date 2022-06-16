@@ -4,5 +4,6 @@
         "data": "./data/aflw_test/",
         "batch_size": 64
     },
-    "saved_path": "./transformer/best.pt"
+    "saved_path": "./pretrained_weight/transformer/best.pt",
+    "output": "./solution.txt"
 }

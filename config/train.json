@@ -7,7 +7,7 @@
         "learning_rate": 1e-4,
         "checkpoint": 10
     },
-    "saved_directory": "./transformer/",
+    "saved_directory": "./pretrained_weight/transformer/",
     "validation": {
         "data": "./data/aflw_val/",
         "epoch": 1

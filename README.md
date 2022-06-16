@@ -7,6 +7,7 @@ pip install -r requirements.txt
 ```
 
 ## (Optional) Data Generation
+Increase the training data by applying gamma correction and sobel edge detection.
 ```shell
 python get_hybrid.py <--source_dir SOURCE> <--dest_dir DEST>
 ```
@@ -55,3 +56,8 @@ python main.py [--do_train TRAIN] [--do_predict PREDICT]
         "output": "path/to/output/txt"
     }
     ```
+### Example 
+```shell
+python main.py --do_train ./config/train.json        # training
+python main.py --do_predict ./config/predict.json    # inference
+```

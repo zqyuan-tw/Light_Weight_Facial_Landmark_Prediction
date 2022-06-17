@@ -6,6 +6,12 @@ Train a facial landmark detection model with size < 15 MB.
 pip install -r requirements.txt
 ```
 
+## Get Dataset with [gdown](https://github.com/wkentaro/gdown)
+```shell
+gdown --id 1hhcsXxGehgf_wf2QJKSuwB7e3xxrTYn9
+unzip data.zip
+```
+
 ## (Optional) Data Generation
 Increase the training data by applying gamma correction and sobel edge detection.
 ```shell
